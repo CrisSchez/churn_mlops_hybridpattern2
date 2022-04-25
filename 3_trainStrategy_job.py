@@ -222,7 +222,8 @@ if len(sys.argv) == 2:
         example_model_input = {"StreamingTV": "No", "MonthlyCharges": 70.35, "PhoneService": "No", "PaperlessBilling": "No", "Partner": "No", "OnlineBackup": "No", "gender": "Female", "Contract": "Month-to-month", "TotalCharges": 1397.475,
                        "StreamingMovies": "No", "DeviceProtection": "No", "PaymentMethod": "Bank transfer (automatic)", "tenure": 29, "Dependents": "No", "OnlineSecurity": "No", "MultipleLines": "No", "InternetService": "DSL", "SeniorCitizen": "No", "TechSupport": "No"}
 
-
+        variables=cml.get_environment_variables()
+        gtoken=variables['GITTOKEN']
         try:
           
                     
@@ -260,15 +261,30 @@ if len(sys.argv) == 2:
             print('rebuilding...')
             # Wait for the model to deploy.
             hola='prueba'
+            
+                                
+            os.system('git checkout main')
+            os.system('git add ./models/champion/ce.pkl')
+            os.system('git commit -m "ce reentrenado"')
+            os.system('git push https://'+gtoken+'@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
+
+            os.system('git checkout main')
+            os.system('git add ./models/champion/champion.pkl')
+            os.system('git commit -m "modelo reentrenado"')
+            os.system('git push https://'+gtoken+'@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
+            os.system('git checkout main')
+            
+            
+            
             os.system('git checkout onprem')
             os.system('git add ./models/champion/ce.pkl')
             os.system('git commit -m "ce reentrenado"')
-            os.system('git push https://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@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
+            os.system('git push https://'+gtoken+'@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
 
             os.system('git checkout onprem')
             os.system('git add ./models/champion/champion.pkl')
             os.system('git commit -m "modelo reentrenado"')
-            os.system('git push https://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@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
+            os.system('git push https://'+gtoken+'@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
               
             os.system('git checkout main')
               
@@ -330,16 +346,29 @@ if len(sys.argv) == 2:
                     print("Deploying Model.....")
                     time.sleep(10)
                     
+                                
+            os.system('git checkout main')
+            os.system('git add ./models/champion/ce.pkl')
+            os.system('git commit -m "ce reentrenado"')
+            os.system('git push https://'+gtoken+'@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
+
+            os.system('git checkout main')
+            os.system('git add ./models/champion/champion.pkl')
+            os.system('git commit -m "modelo reentrenado"')
+            os.system('git push https://'+gtoken+'@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
+            os.system('git checkout main')
+            
+                    
                     
             os.system('git checkout onprem')
             os.system('git add ./models/champion/ce.pkl')
             os.system('git commit -m "ce reentrenado"')
-            os.system('git push https://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@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
+            os.system('git push https://'+gtoken+'@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
 
             os.system('git checkout onprem')
             os.system('git add ./models/champion/champion.pkl')
             os.system('git commit -m "modelo reentrenado"')
-            os.system('git push https://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@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
+            os.system('git push https://'+gtoken+'@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
             os.system('git checkout main')
             
 
