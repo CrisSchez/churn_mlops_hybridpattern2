@@ -259,8 +259,19 @@ if len(sys.argv) == 2:
             sys.argv=[]
             print('rebuilding...')
             # Wait for the model to deploy.
+            hola='prueba'
+            os.system('git checkout onprem')
+            os.system('git add ./models/champion/ce.pkl')
+            os.system('git commit -m "ce reentrenado"')
+            os.system('git push https://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@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
 
-          
+            os.system('git checkout onprem')
+            os.system('git add ./models/champion/champion.pkl')
+            os.system('git commit -m "modelo reentrenado"')
+            os.system('git push https://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@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
+              
+            os.system('git checkout main')
+              
         except:
           
                       # Create the YAML file for the model lineage
@@ -318,7 +329,19 @@ if len(sys.argv) == 2:
                 else:
                     print("Deploying Model.....")
                     time.sleep(10)
+                    
+                    
+            os.system('git checkout onprem')
+            os.system('git add ./models/champion/ce.pkl')
+            os.system('git commit -m "ce reentrenado"')
+            os.system('git push https://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@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
 
+            os.system('git checkout onprem')
+            os.system('git add ./models/champion/champion.pkl')
+            os.system('git commit -m "modelo reentrenado"')
+            os.system('git push https://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@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
+            os.system('git checkout main')
+            
 
     except:
         sys.exit("Invalid Arguments passed to Experiment")
