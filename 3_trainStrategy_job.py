@@ -1,6 +1,10 @@
 print("experiments")
 
-
+def line_prepender(filename, line):
+    with open(filename, 'r+') as f:
+        content = f.read()
+        f.seek(0, 0)
+        f.write(line.rstrip('\r\n') + '\n' + content)
 
 import numpy as np
 import pandas as pd
@@ -216,7 +220,7 @@ if len(sys.argv) == 2:
         default_engine_details = cml.get_default_engine({})
         default_engine_image_id = default_engine_details["id"]
 
-
+        line_prepender('retrain_dates.txt', str(datetime.datetime.now()))
         print("creando el modelo")
 
         example_model_input = {"StreamingTV": "No", "MonthlyCharges": 70.35, "PhoneService": "No", "PaperlessBilling": "No", "Partner": "No", "OnlineBackup": "No", "gender": "Female", "Contract": "Month-to-month", "TotalCharges": 1397.475,
@@ -265,17 +269,29 @@ if len(sys.argv) == 2:
                                 
             
             os.system('git checkout main')
+            os.system('git add 3_trainStrategy_job.py retrain_dates.txt ./models/champion/champion.pkl')
+            os.system('git commit -m "modelo reentrenado main"')
+            os.system('git push https://'+gtoken+'@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
+            os.system('git checkout main')
             os.system('git add ./models/champion/champion.pkl')
             os.system('git commit -m "modelo reentrenado main"')
             os.system('git push https://'+gtoken+'@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
             os.system('git checkout main')
             
             
-            
             os.system('git checkout onprem')
             os.system('git checkout main -- ./models/champion/champion.pkl')
             os.system('git add ./models/champion/champion.pkl')
             os.system('git commit -m "champion reentrenado onprem"')
+            os.system('git push https://'+gtoken+'@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
+
+                          
+            os.system('git checkout main')
+            
+            os.system('git checkout onprem')
+            os.system('git checkout main -- retrain_dates.txt')
+            os.system('git add retrain_dates.txt')
+            os.system('git commit -m "retrain_dates.txt"')
             os.system('git push https://'+gtoken+'@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
 
                           
@@ -341,6 +357,10 @@ if len(sys.argv) == 2:
                     
                                 
             os.system('git checkout main')
+            os.system('git add 3_trainStrategy_job.py retrain_dates.txt')
+            os.system('git commit -m "modelo reentrenado main"')
+            os.system('git push https://'+gtoken+'@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
+            os.system('git checkout main')
             os.system('git add ./models/champion/champion.pkl')
             os.system('git commit -m "modelo reentrenado main"')
             os.system('git push https://'+gtoken+'@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
@@ -348,10 +368,20 @@ if len(sys.argv) == 2:
             
             
             
+            
             os.system('git checkout onprem')
             os.system('git checkout main -- ./models/champion/champion.pkl')
             os.system('git add ./models/champion/champion.pkl')
             os.system('git commit -m "champion reentrenado onprem"')
+            os.system('git push https://'+gtoken+'@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
+
+                          
+            os.system('git checkout main')
+            
+            os.system('git checkout onprem')
+            os.system('git checkout main -- retrain_dates.txt')
+            os.system('git add retrain_dates.txt')
+            os.system('git commit -m "retrain_dates.txt"')
             os.system('git push https://'+gtoken+'@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
 
                           
