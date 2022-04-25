@@ -263,29 +263,22 @@ if len(sys.argv) == 2:
             hola='prueba'
             
                                 
-            os.system('git checkout main')
-            os.system('git add ./models/champion/ce.pkl')
-            os.system('git commit -m "ce reentrenado"')
-            os.system('git push https://'+gtoken+'@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
-
+            
             os.system('git checkout main')
             os.system('git add ./models/champion/champion.pkl')
-            os.system('git commit -m "modelo reentrenado"')
+            os.system('git commit -m "modelo reentrenado main"')
             os.system('git push https://'+gtoken+'@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
             os.system('git checkout main')
             
             
             
             os.system('git checkout onprem')
-            os.system('git add ./models/champion/ce.pkl')
-            os.system('git commit -m "ce reentrenado"')
+            os.system('git checkout main -- ./models/champion/champion.pkl')
+            os.system('git add ./models/champion/champion.pkl')
+            os.system('git commit -m "champion reentrenado onprem"')
             os.system('git push https://'+gtoken+'@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
 
-            os.system('git checkout onprem')
-            os.system('git add ./models/champion/champion.pkl')
-            os.system('git commit -m "modelo reentrenado"')
-            os.system('git push https://'+gtoken+'@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
-              
+                          
             os.system('git checkout main')
               
         except:
@@ -348,29 +341,21 @@ if len(sys.argv) == 2:
                     
                                 
             os.system('git checkout main')
-            os.system('git add ./models/champion/ce.pkl')
-            os.system('git commit -m "ce reentrenado"')
-            os.system('git push https://'+gtoken+'@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
-
-            os.system('git checkout main')
             os.system('git add ./models/champion/champion.pkl')
-            os.system('git commit -m "modelo reentrenado"')
+            os.system('git commit -m "modelo reentrenado main"')
             os.system('git push https://'+gtoken+'@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
             os.system('git checkout main')
             
-                    
-                    
+            
+            
             os.system('git checkout onprem')
-            os.system('git add ./models/champion/ce.pkl')
-            os.system('git commit -m "ce reentrenado"')
+            os.system('git checkout main -- ./models/champion/champion.pkl')
+            os.system('git add ./models/champion/champion.pkl')
+            os.system('git commit -m "champion reentrenado onprem"')
             os.system('git push https://'+gtoken+'@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
 
-            os.system('git checkout onprem')
-            os.system('git add ./models/champion/champion.pkl')
-            os.system('git commit -m "modelo reentrenado"')
-            os.system('git push https://'+gtoken+'@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
+                          
             os.system('git checkout main')
-            
 
     except:
         sys.exit("Invalid Arguments passed to Experiment")
