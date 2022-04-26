@@ -233,7 +233,7 @@ if len(sys.argv) == 2:
                     
                       # Create the YAML file for the model lineage
             yaml_text = \
-                """"ModelOpsChurn":
+                """"ModelOpsChurn_Cloud":
               hive_table_qualified_names:                # this is a predefined key to link to training data
                 - "default.telco_churn@cm"               # the qualifiedName of the hive_table object representing                
               metadata:                                  # this is a predefined key for additional metadata
@@ -311,7 +311,7 @@ if len(sys.argv) == 2:
 
             create_model_params = {
                 "projectId": project_id,
-                "name": "ModelOpsChurn",
+                "name": "ModelOpsChurn_Cloud",
                 "description": "Explain a given model prediction",
                 "visibility": "private",
                 "enableAuth": False,
