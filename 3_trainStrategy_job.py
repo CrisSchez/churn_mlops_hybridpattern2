@@ -270,7 +270,27 @@ if len(sys.argv) == 2:
             print('rebuilding...')
             # Wait for the model to deploy.
             hola='prueba'
+            model_id = cml.get_models(params)[1]['id']
+            latest_model = cml.get_model({"id": model_id, "latestModelDeployment": True, "latestModelBuild": True})
+
+            build_model_params = {
+              "modelId": latest_model['latestModelBuild']['modelId'],
+              "projectId": latest_model['latestModelBuild']['projectId'],
+              "targetFilePath": "13_model_viz.py",
+              "targetFunctionName": "predict",
+              "engineImageId": default_engine_image_id,
+              "kernel": "python3",
+              "examples": latest_model['latestModelBuild']['examples'],
+              "cpuMillicores": 1000,
+              "memoryMb": 2048,
+              "nvidiaGPUs": 0,
+              "replicationPolicy": {"type": "fixed", "numReplicas": 1},
+              "environment": {},"runtimeId":int(id_rt)}
+
+            cml.rebuild_model(build_model_params)
             
+            print('rebuilding...')
+            # Wait for the model to deploy.            
                                 
             
             os.system('git checkout main')
@@ -356,7 +376,50 @@ if len(sys.argv) == 2:
                 else:
                     print("Deploying Model.....")
                     time.sleep(10)
+            example_input_viz={"data": {"colnames": ["StreamingTV", "MonthlyCharges", "PhoneService", "PaperlessBilling","Partner", "OnlineBackup", "gender", "Contract", "TotalCharges","StreamingMovies", "DeviceProtection", "PaymentMethod", "tenure","Dependents", "OnlineSecurity", "MultipleLines", "InternetService","SeniorCitizen", "TechSupport"],"coltypes": ["STRING","FLOAT","STRING","STRING","STRING","STRING","STRING","STRING","FLOAT","STRING","STRING","STRING", "INT","STRING","STRING","STRING","STRING","STRING","STRING"],"rows": [["No", "70.35", "No", "No", "No", "No", "Female", "Month-to-month","1397.475", "No", "No", "Bank transfer (automatic)", "29", "No","No", "No", "DSL", "No", "No"],["No", "70.35", "No", "No", "No", "No", "Female", "Month-to-month","1397.475", "No", "No", "Bank transfer (automatic)", "29", "No","No", "No", "DSL", "No", "No"]]}}        
                     
+            create_model_params = {
+                "projectId": project_id,
+                "name": "ModelViz",
+                "description": "visualization a given model prediction",
+                "visibility": "private",
+                "enableAuth": False,
+                "targetFilePath": "13_model_viz.py",
+                "targetFunctionName": "predict",
+                "engineImageId": default_engine_image_id,
+                "kernel": "python3",
+                "examples": [
+                    {
+                        "request": example_input_viz,
+                        "response": {}
+                    }],
+                "cpuMillicores": 1000,
+                "memoryMb": 2048,
+                "nvidiaGPUs": 0,
+                "replicationPolicy": {"type": "fixed", "numReplicas": 1},
+                "environment": {},"runtimeId":int(id_rt)}
+            print("creando nuevo modelo de visualizacion")
+            new_model_details = cml.create_model(create_model_params)
+            access_key = new_model_details["accessKey"]  # todo check for bad response
+            model_id = new_model_details["id"]
+
+            print("New model created with access key", access_key)
+
+            # Disable model_authentication
+            cml.set_model_auth({"id": model_id, "enableAuth": False})
+            sys.argv=[]
+
+            # Wait for the model to deploy.
+            is_deployed = False
+            while is_deployed == False:
+                model = cml.get_model({"id": str(
+                    new_model_details["id"]), "latestModelDeployment": True, "latestModelBuild": True})
+                if model["latestModelDeployment"]["status"] == 'deployed':
+                    print("Model is deployed")
+                    break
+                else:
+                    print("Deploying Model.....")
+                    time.sleep(10)                    
                                 
             os.system('git checkout main')
             os.system('git add 3_trainStrategy_job.py retrain_dates.txt ./models/champion/champion.pkl')
