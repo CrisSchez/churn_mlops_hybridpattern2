@@ -14,7 +14,7 @@ try:
     os.system('pip3 install pyspark')
     from pyspark.sql.types import *
     from pyspark.sql import SparkSession
-
+  import os
   os.system('pip3 install -r requirements.txt')
   #os.system('pip install pickle')
   import sys
