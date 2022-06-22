@@ -135,7 +135,7 @@ PROJECT_NAME = os.getenv("CDSW_PROJECT")
 cml = CMLBootstrap(HOST, USERNAME, API_KEY, PROJECT_NAME)
 project_id = cml.get_project()['id']
 params = {"projectId":project_id,"latestModelDeployment":True,"latestModelBuild":True}
-model_id = pd.DataFrame(cml.get_models(params))['id'].max()
+model_id = pd.DataFrame(cml.get_models(params))['id'].min()
 latest_model = cml.get_model({"id": model_id, "latestModelDeployment": True, "latestModelBuild": True})
 
 Model_CRN = latest_model ["crn"]
