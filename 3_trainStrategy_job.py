@@ -436,7 +436,19 @@ if len(sys.argv) == 2:
             os.system('git commit -m "champion reentrenado onprem"')
             os.system('git push https://'+gtoken+'@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
 
-                          
+            os.system('git checkout onprem')
+            os.system('git checkout main -- 5a_ml_ops_simulation.py')
+            os.system('git add 5a_ml_ops_simulation.py')
+            os.system('git commit -m "fichero simulación"')
+            os.system('git push https://'+gtoken+'@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
+
+            os.system('git checkout onprem')
+            os.system('git checkout main -- 5b_ml_ops_visual.py')
+            os.system('git add 5b_ml_ops_visual.py')
+            os.system('git commit -m "fichero simulación"')
+            os.system('git push https://'+gtoken+'@github.com/CrisSchez/churn_mlops_hybridpattern2.git')
+
+            
             os.system('git checkout main')
             
             os.system('git checkout onprem')
