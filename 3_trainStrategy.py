@@ -34,6 +34,24 @@ from sklearn.ensemble import RandomForestRegressor
 from lime.lime_tabular import LimeTabularExplainer
 
 from churnexplainer import ExplainedModel, CategoricalEncoder
+import xml.etree.ElementTree as ET
+from cmlbootstrap import CMLBootstrap
+# Set the setup variables needed by CMLBootstrap
+HOST = os.getenv("CDSW_API_URL").split(
+    ":")[0] + "://" + os.getenv("CDSW_DOMAIN")
+USERNAME = os.getenv("CDSW_PROJECT_URL").split(
+    "/")[6]  # args.username  # "vdibia"
+API_KEY = os.getenv("CDSW_API_KEY") 
+PROJECT_NAME = os.getenv("CDSW_PROJECT")  
+
+# Instantiate API Wrapper
+cml = CMLBootstrap(HOST, USERNAME, API_KEY, PROJECT_NAME)
+runtimes=cml.get_runtimes()
+runtimes=runtimes['runtimes']
+runtimesdf = pd.DataFrame.from_dict(runtimes, orient='columns')
+runtimeid=runtimesdf.loc[(runtimesdf['editor'] == 'Workbench') & (runtimesdf['kernel'] == 'Python 3.7') & (runtimesdf['edition'] == 'Standard')]['id']
+id_rt=runtimeid.values[0]
+
 
 data_dir = '/home/cdsw'
 
@@ -162,7 +180,7 @@ create_model_params = {
     "memoryMb": 2048,
     "nvidiaGPUs": 0,
     "replicationPolicy": {"type": "fixed", "numReplicas": 1},
-    "environment": {},"runtimeId":5}
+    "environment": {},"runtimeId":int(id_rt)}
 print("creando nuevo modelo")
 new_model_details = cml.create_model(create_model_params)
 access_key = new_model_details["accessKey"]  # todo check for bad response
