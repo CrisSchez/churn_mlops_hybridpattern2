@@ -61,6 +61,12 @@ try:
     # Instantiate API Wrapper
     cml = CMLBootstrap(HOST, USERNAME, API_KEY, PROJECT_NAME)
 
+    
+    runtimes=cml.get_runtimes()
+    runtimes=runtimes['runtimes']
+    runtimesdf = pd.DataFrame.from_dict(runtimes, orient='columns')
+    runtimeid=runtimesdf.loc[(runtimesdf['editor'] == 'Workbench') & (runtimesdf['kernel'] == 'Python 3.7') & (runtimesdf['edition'] == 'Standard')]['id']
+    id_rt=runtimeid.values[0]
 
 
     from sklearn.model_selection import train_test_split
@@ -115,7 +121,7 @@ try:
             - "default.telco_churn@cm"               # the qualifiedName of the hive_table object representing                
           metadata:                                  # this is a predefined key for additional metadata
             query: "select * from historical_data"   # suggested use case: query used to extract training data
-            training_file: "3_trainStrategy_job.py"       # suggested use case: training file used
+            training_file: "3_trainStrategy.py"       # suggested use case: training file used
         """
 
         with open('lineage.yml', 'w') as lineage:
@@ -135,7 +141,7 @@ try:
           "memoryMb": 2048,
           "nvidiaGPUs": 0,
           "replicationPolicy": {"type": "fixed", "numReplicas": 1},
-          "environment": {},"runtimeId":5}
+          "environment": {},"runtimeId":int(id_rt)}
 
         cml.rebuild_model(build_model_params)
         sys.argv=[]
@@ -156,7 +162,7 @@ try:
           - "default.telco_churn@cm"               # the qualifiedName of the hive_table object representing                
         metadata:                                  # this is a predefined key for additional metadata
           query: "select * from historical_data"   # suggested use case: query used to extract training data
-          training_file: "3_trainStrategy_job.py"       # suggested use case: training file used
+          training_file: "3_trainStrategy.py"       # suggested use case: training file used
       """
 
       with open('lineage.yml', 'w') as lineage:
@@ -181,7 +187,7 @@ try:
           "memoryMb": 2048,
           "nvidiaGPUs": 0,
           "replicationPolicy": {"type": "fixed", "numReplicas": 1},
-          "environment": {},"runtimeId":5}
+          "environment": {},"runtimeId":int(id_rt)}
       print("creando nuevo modelo")
       new_model_details = cml.create_model(create_model_params)
       access_key = new_model_details["accessKey"]  # todo check for bad response
