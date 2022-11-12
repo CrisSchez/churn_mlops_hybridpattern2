@@ -140,20 +140,20 @@ spark.sql("show tables in default").show()
 # This is here to create the table in Hive used be the other parts of the project, if it
 # does not already exist.
 
-if ('telco_churn' not in list(spark.sql("show tables in default").toPandas()['tableName'])):
-    print("creating the telco_churn database")
+if ('telco_pvc' not in list(spark.sql("show tables in default").toPandas()['tableName'])):
+    print("creating the telco_pvc database")
     telco_data\
         .write.format("parquet")\
         .mode("overwrite")\
         .saveAsTable(
-            'default.telco_churn'
+            'default.telco_pvc'
         )
 
 # Show the data in the hive table
-spark.sql("select * from default.telco_churn").show()
+spark.sql("select * from default.telco_pvc").show()
 
 # To get more detailed information about the hive table you can run this:
-df = spark.sql("SELECT * FROM default.telco_churn").toPandas()
+df = spark.sql("SELECT * FROM default.telco_pvc").toPandas()
 
 
 idcol = 'customerID'
@@ -240,7 +240,7 @@ if len(sys.argv) == 2:
             yaml_text = \
                 """"ModelOpsChurn_Cloud":
               hive_table_qualified_names:                # this is a predefined key to link to training data
-                - "default.telco_churn@cm"               # the qualifiedName of the hive_table object representing                
+                - "default.telco_pvc@cm"               # the qualifiedName of the hive_table object representing                
               metadata:                                  # this is a predefined key for additional metadata
                 query: "select * from historical_data"   # suggested use case: query used to extract training data
                 training_file: "3_trainStrategy_job.py"       # suggested use case: training file used
@@ -325,7 +325,7 @@ if len(sys.argv) == 2:
             yaml_text = \
                 """"ModelChurn":
               hive_table_qualified_names:                # this is a predefined key to link to training data
-                - "default.telco_churn@cm"               # the qualifiedName of the hive_table object representing                
+                - "default.telco_pvc@cm"               # the qualifiedName of the hive_table object representing                
               metadata:                                  # this is a predefined key for additional metadata
                 query: "select * from historical_data"   # suggested use case: query used to extract training data
                 training_file: "3_trainStrategy_job.py"       # suggested use case: training file used
